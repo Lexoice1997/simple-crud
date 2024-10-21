@@ -11,7 +11,7 @@ describe("Users", () => {
     product = {
       username: "Azamat",
       age: 15,
-      hobbies: ["asd"],
+      hobbies: ["Footbal"],
     },
     testName = "Azamat Berdimuratov",
     testPrice = { title: "hello", age: 15 }
