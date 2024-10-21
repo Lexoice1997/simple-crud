@@ -4,24 +4,23 @@ import chaiHttp from "chai-http"
 import { server } from "../src/server.ts"
 
 chai.use(chaiHttp)
-describe("Products", () => {
-  // Consts
+describe("Users", () => {
   const id = "3",
     numProducts = 5,
     successCode = 200,
     product = {
-      name: "hello",
-      description: "hello",
-      price: "1170",
+      username: "Azamat",
+      age: 15,
+      hobbies: ["Footbal"],
     },
-    testName = "Cannon EOS 80D DSLR Camera",
-    testPrice = { title: "hello", price: "778" }
+    testName = "Azamat Berdimuratov",
+    testPrice = { title: "hello", age: 15 }
 
-  describe("/GET product", () => {
-    it("it should GET all the products", (done) => {
+  describe("/GET user", () => {
+    it("it should GET all the users", (done) => {
       chai
         .request(server)
-        .get("/api/products")
+        .get("/api/users")
         .end((err, res) => {
           res.should.have.status(successCode)
           res.body.should.be.a("array")
@@ -31,36 +30,36 @@ describe("Products", () => {
     })
   })
 
-  describe("/POST product", () => {
-    it("it should POST a product ", (done) => {
+  describe("/POST user", () => {
+    it("it should POST a user ", (done) => {
       chai
         .request(server)
-        .post("/api/products")
+        .post("/api/users")
         .send(product)
         .end((err, res) => {
           res.should.have.status(201)
           res.body.should.be.a("object")
-          res.body.should.have.property("name")
-          res.body.should.have.property("description")
-          res.body.should.have.property("price")
+          res.body.should.have.property("username")
+          res.body.should.have.property("age")
+          res.body.should.have.property("hobbies")
           res.body.should.have.property("id")
           done()
         })
     })
   })
 
-  describe("/GET/:id product", () => {
+  describe("/GET/:id user", () => {
     it("it should GET a book by the given id", (done) => {
       chai
         .request(server)
-        .get(`/api/products/${id}`)
+        .get(`/api/users/${id}`)
         .end((err, res) => {
           res.should.have.status(successCode)
           res.body.should.be.a("object")
           res.body.should.have.property("id").eql(id)
-          res.body.should.have.property("description")
-          res.body.should.have.property("price")
-          res.body.should.have.property("name").eql(testName)
+          res.body.should.have.property("age")
+          res.body.should.have.property("hobbies")
+          res.body.should.have.property("username").eql(testName)
           done()
         })
     })
@@ -70,29 +69,29 @@ describe("Products", () => {
     it("it should UPDATE a product given the id", (done) => {
       chai
         .request(server)
-        .put(`/api/products/${id}`)
+        .put(`/api/users/${id}`)
         .send(testPrice)
         .end((err, res) => {
           res.should.have.status(successCode)
           res.body.should.be.a("object")
           res.body.should.have.property("id").eql(id)
-          res.body.should.have.property("name").eql(testName)
-          res.body.should.have.property("description")
-          res.body.should.have.property("price").eql(testPrice.price)
+          res.body.should.have.property("username").eql(testName)
+          res.body.should.have.property("hobbies")
+          res.body.should.have.property("age").eql(testPrice.age)
           done()
         })
     })
   })
 
-  describe("/DELETE/:id product", () => {
-    it("it should DELETE a product given the id", (done) => {
+  describe("/DELETE/:id user", () => {
+    it("it should DELETE a user given the id", (done) => {
       chai
         .request(server)
-        .delete(`/api/products/${id}`)
+        .delete(`/api/users/${id}`)
         .end((err, res) => {
           res.should.have.status(successCode)
           res.body.should.be.a("object")
-          res.body.should.have.property("message").eql(`Product ${id} removed`)
+          res.body.should.have.property("message").eql(`User ${id} removed`)
           done()
         })
     })
